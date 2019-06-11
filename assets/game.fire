@@ -17,7 +17,7 @@
         "__id__": 2
       },
       {
-        "__id__": 24
+        "__id__": 26
       }
     ],
     "_tag": -1,
@@ -81,10 +81,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 22
+        "__id__": 24
       },
       {
-        "__id__": 23
+        "__id__": 25
       }
     ],
     "_prefab": null,
@@ -648,7 +648,7 @@
         "__id__": 20
       },
       {
-        "__id__": 21
+        "__id__": 23
       }
     ],
     "_prefab": null,
@@ -724,16 +724,30 @@
       "__id__": 18
     },
     "_enabled": true,
-    "bulletMap": [
+    "bulletPrefabs": [
       {
-        "__uuid__": "3b92b8ea-87cb-405d-a2bb-2d67d2cac494"
+        "__id__": 21
       },
       {
-        "__uuid__": "533c45d4-ce91-4849-88cd-97de1729d3fb"
+        "__id__": 22
       }
     ],
     "shootingInterval": 0.2,
     "lifeValue": 2
+  },
+  {
+    "__type__": "Bullet",
+    "type": 0,
+    "prefab": {
+      "__uuid__": "3b92b8ea-87cb-405d-a2bb-2d67d2cac494"
+    }
+  },
+  {
+    "__type__": "Bullet",
+    "type": 1,
+    "prefab": {
+      "__uuid__": "533c45d4-ce91-4849-88cd-97de1729d3fb"
+    }
   },
   {
     "__type__": "cc.Animation",
@@ -790,17 +804,17 @@
     },
     "_children": [
       {
-        "__id__": 25
+        "__id__": 27
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 27
+        "__id__": 29
       },
       {
-        "__id__": 28
+        "__id__": 30
       }
     ],
     "_prefab": null,
@@ -845,14 +859,14 @@
     "_name": "Label",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 24
+      "__id__": 26
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 26
+        "__id__": 28
       }
     ],
     "_prefab": null,
@@ -897,7 +911,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 25
+      "__id__": 27
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -919,7 +933,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 24
+      "__id__": 26
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -945,7 +959,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 24
+      "__id__": 26
     },
     "_enabled": true,
     "transition": 2,
@@ -967,7 +981,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 29
+        "__id__": 31
       }
     ],
     "_N$interactable": true,
@@ -1005,7 +1019,7 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 24
+      "__id__": 26
     }
   },
   {
@@ -1014,7 +1028,7 @@
       "__id__": 18
     },
     "component": "player",
-    "handler": "bleed",
+    "handler": "switchBulletType",
     "customEventData": ""
   }
 ]

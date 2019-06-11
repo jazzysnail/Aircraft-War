@@ -1,5 +1,28 @@
 /**
- * 玩家飞机组件
+ * 子弹类
+ */
+let Bullet = cc.Class({
+    name: "Bullet",
+    properties: {
+        type: {
+          default: -1,
+          type: cc.Integer
+        },
+        prefab: cc.Prefab,
+        poolName: {
+          get: function() {
+            if (this.prefab) {
+              return this.prefab.name.replace(/-([a-z])/g, (m, $1) => $1.toLocaleUpperCase()) + 'Pool';
+            } else {
+              return '-'
+            }
+          }
+        }
+    }
+});
+
+/**
+ * 玩家飞机类
  */
 cc.Class({
     extends: cc.Component,
@@ -9,11 +32,7 @@ cc.Class({
           default: 0, // ['普通子弹', '双弹道子弹']
           serializable: false
         },
-        bulletMap: {
-            default:[],
-            displayName: "子弹预设",
-            type:[cc.Prefab]
-        },
+        bulletPrefabs: [Bullet],
         shootingInterval: {
             default: 0.2,
             displayName: "攻击间隔",
@@ -30,14 +49,20 @@ cc.Class({
     },
 
     onLoad () {
-        this.bulletPoolMap = this.bulletMap.map(prefab => {
-            return prefab.name.replace(/-([a-z])/g, (m, $1) => $1.toLocaleUpperCase()) + 'Pool';
-        });
-        this.bulletPoolMap.forEach((name, index) => {
-            this.createBulletPool(name, 20, index, this.bulletMap[index]);
-        });
         this.timer = 0;
         this.isBlowUp = false;
+        this.bulletMap = {};
+        // 遍历子弹实例创建对象池及索引
+        this.bulletPrefabs.forEach(bulletObj => {
+          let { poolName, type, prefab } = bulletObj;
+          // 创建子弹对象池
+          this.createBulletPool(poolName, 20, type, prefab);
+          // 创建子弹类型索引
+          this.bulletMap[type] = {
+            pool: this[poolName],
+            prefab: prefab,
+          };
+        });
 
         // this.node.on('touchstart', function ( event ) {
         //     console.log('touchstart');
@@ -55,20 +80,13 @@ cc.Class({
       }
       this.timer += dt;
     },
-    /**
-     * 消耗血量
-     * @return {[type]} [description]
-     */
+    // 消耗血量
     bleed() {
         this.lifeValue--;
         if(!this.health) {
             this.runBlowUpAnim();
         }
     },
-    /**
-     * 炸毁动画
-     * @return {[type]} [description]
-     */
     runBlowUpAnim() {
         this.getComponent(cc.Animation).play('blowUp');
         this.isBlowUp = true;
@@ -89,25 +107,23 @@ cc.Class({
         this[poolName].put(node);
       }
     },
-
     /**
      * 射击(向父节点添加子弹节点)
      * @return {undefined}
      */
     shoot() {
         if (!this.isBlowUp) {
-            let bulletPool = this[this.bulletPoolMap[this.bulletType]];
-            let bulletPrefab = this.bulletMap[this.bulletType];
-            let bulletNode = bulletPool.size() > 0
-                            ? bulletPool.get()
-                            : cc.instantiate(bulletPrefab);
+            let { pool, prefab } = this.bulletMap[this.bulletType];
+            let node = pool.size() > 0
+                            ? pool.get()
+                            : cc.instantiate(prefab);
 
             // 挂载节点
-            this.node.parent.addChild(bulletNode);
+            this.node.parent.addChild(node);
             // 获取玩家飞机定位确定起始位置并执行动画
             let { position: { x, y } } = this.node;
-            bulletNode.setPosition(cc.v2(x, y + 16));
-            bulletNode.getComponent("bullet").fly();
+            node.setPosition(cc.v2(x, y + 16));
+            node.getComponent("bullet").fly();
         }
     },
     /**

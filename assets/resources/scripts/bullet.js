@@ -39,7 +39,7 @@ cc.Class({
   },
   // 当子弹击中或消失时
   onBulletHitOrDisappeared(target) {
-    let bulletPool = this.player[this.player.bulletPoolMap[this.type]];
-    bulletPool.put(target);
+    let { pool } = this.player.bulletMap[this.type];
+    pool.put(target);
   }
 });
