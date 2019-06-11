@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "game_resume_pressed",
+    "texture": "701a40c2-21ee-4934-a441-98f4fee18fe9",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      37,
+      41
+    ],
+    "offset": [
+      0.5,
+      0
+    ],
+    "originalSize": [
+      38,
+      41
+    ]
+  }
+}

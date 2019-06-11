@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "game_resume_nor",
+    "texture": "d468499e-95cc-4d03-8690-91ebb772b1e0",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      37,
+      41
+    ],
+    "offset": [
+      0.5,
+      0
+    ],
+    "originalSize": [
+      38,
+      41
+    ]
+  }
+}

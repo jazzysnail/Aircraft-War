@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "f5830698-a40e-464b-b51b-bb0812f9d903",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "New Atlas": {
+      "ver": "1.0.3",
+      "uuid": "13dffb77-0249-4d54-8810-314b95ad2b1c",
+      "rawTextureUuid": "f5830698-a40e-464b-b51b-bb0812f9d903",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -62,
+      "offsetY": -79.5,
+      "trimX": 0,
+      "trimY": 159,
+      "width": 132,
+      "height": 97,
+      "rawWidth": 256,
+      "rawHeight": 256,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

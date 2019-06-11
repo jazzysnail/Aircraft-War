@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "quit_nor",
+    "texture": "40746358-1878-4f60-a917-84c7a1795dcb",
+    "atlas": "",
+    "rect": [
+      0,
+      1,
+      110,
+      23
+    ],
+    "offset": [
+      0,
+      -0.5
+    ],
+    "originalSize": [
+      110,
+      24
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "New Atlas",
+    "texture": "f5830698-a40e-464b-b51b-bb0812f9d903",
+    "atlas": "",
+    "rect": [
+      0,
+      159,
+      132,
+      97
+    ],
+    "offset": [
+      -62,
+      -79.5
+    ],
+    "originalSize": [
+      256,
+      256
+    ]
+  }
+}

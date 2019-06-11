@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "resume_sel",
+    "texture": "d1ec9f44-1456-428b-8da1-8c5e424faab6",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      54,
+      26
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      54,
+      26
+    ]
+  }
+}

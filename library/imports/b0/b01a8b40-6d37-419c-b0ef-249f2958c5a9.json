@@ -1,0 +1,23 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "player.plist",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_spriteFrames": {
+    "hero1": {
+      "__uuid__": "1d4d246f-5ccd-4604-81ee-389eb346329b"
+    },
+    "hero_blowup_n1": {
+      "__uuid__": "218b3770-a332-42ac-bde4-0362e0077926"
+    },
+    "hero_blowup_n2": {
+      "__uuid__": "5a2cf916-dc06-40f4-ae46-4e5d0dbe0987"
+    },
+    "hero_blowup_n3": {
+      "__uuid__": "5d0b289b-dadb-45e9-a43a-310f33b7b10b"
+    },
+    "hero_blowup_n4": {
+      "__uuid__": "5f3bda2a-1151-439f-a9ec-9c6f5de4776f"
+    }
+  }
+}
