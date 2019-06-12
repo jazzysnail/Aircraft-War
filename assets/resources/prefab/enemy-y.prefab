@@ -45,8 +45,8 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0,
+      "y": 0
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -67,7 +67,7 @@
     "_localZOrder": 0,
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
-    "groupIndex": 0
+    "groupIndex": 1
   },
   {
     "__type__": "cc.Sprite",
@@ -98,16 +98,6 @@
     }
   },
   {
-    "__type__": "31baf3DKw9NfqpOCOCIfF6L",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "hp": 3
-  },
-  {
     "__type__": "cc.PolygonCollider",
     "_name": "",
     "_objFlags": 0,
@@ -118,8 +108,8 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": 34.4,
+      "y": 43.2
     },
     "points": [
       {
@@ -204,6 +194,18 @@
       }
     ],
     "playOnLoad": false
+  },
+  {
+    "__type__": "f9827NcOy5OOrT9Vu/N5eH9",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "hp": 3,
+    "flyDuration": 18,
+    "type": 1
   },
   {
     "__type__": "cc.PrefabInfo",

@@ -8,8 +8,6 @@
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -21,12 +19,25 @@
                 <key>textureRotated</key>
                 <false/>
             </dict>
+            <key>hero2.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{100,122}</string>
+                <key>spriteSourceSize</key>
+                <string>{100,122}</string>
+                <key>textureRect</key>
+                <string>{{100,0},{100,122}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
             <key>hero_blowup_n1.png</key>
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -34,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{98,124}</string>
                 <key>textureRect</key>
-                <string>{{100,0},{98,124}}</string>
+                <string>{{200,0},{98,124}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -42,8 +53,6 @@
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -51,7 +60,7 @@
                 <key>spriteSourceSize</key>
                 <string>{98,124}</string>
                 <key>textureRect</key>
-                <string>{{198,0},{98,124}}</string>
+                <string>{{298,0},{98,124}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -59,8 +68,6 @@
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -68,7 +75,7 @@
                 <key>spriteSourceSize</key>
                 <string>{98,124}</string>
                 <key>textureRect</key>
-                <string>{{296,0},{98,124}}</string>
+                <string>{{396,0},{98,124}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -76,8 +83,6 @@
             <dict>
                 <key>aliases</key>
                 <array/>
-                <key>anchor</key>
-                <string>{0.5,0.5}</string>
                 <key>spriteOffset</key>
                 <string>{0,0}</string>
                 <key>spriteSize</key>
@@ -85,7 +90,7 @@
                 <key>spriteSourceSize</key>
                 <string>{66,78}</string>
                 <key>textureRect</key>
-                <string>{{394,0},{66,78}}</string>
+                <string>{{494,0},{66,78}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -101,9 +106,9 @@
             <key>realTextureFileName</key>
             <string>player.png</string>
             <key>size</key>
-            <string>{460,124}</string>
+            <string>{560,124}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5feab5db9da7a796c762ae7ed2bbaa96:4f8b96bf81a28baaccf8ff759f3549cd:6f6c59c3c6b7e98e5fb22e47122cb74a$</string>
+            <string>$TexturePacker:SmartUpdate:ba234be1a7216a69dcb5447164e50dae:9d7997173cf2ad327290756d7c8202e1:6f6c59c3c6b7e98e5fb22e47122cb74a$</string>
             <key>textureFileName</key>
             <string>player.png</string>
         </dict>
