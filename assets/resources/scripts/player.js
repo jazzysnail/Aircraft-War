@@ -49,6 +49,7 @@ cc.Class({
     },
 
     onLoad () {
+        let vm = this;
         this.timer = 0;
         this.isBlowUp = false;
         this.bulletMap = {};
@@ -63,13 +64,22 @@ cc.Class({
             prefab: prefab,
           };
         });
-
-        // this.node.on('touchstart', function ( event ) {
-        //     console.log('touchstart');
-        // });
-        // this.node.on('touchstart', function ( event ) {
-        //     console.log('touchstart');
-        // });
+        // 检测拖拽行为
+        this.hold = false;
+        this.node.on('touchstart', function (e) {
+            this.hold = true;
+        });
+        this.node.on('touchmove', function (e) {
+            if (this.hold) {
+              let { x, y } = e.getLocation();
+              x -= vm.node.parent.width/2;
+              y -= (vm.node.parent.height/2);
+              vm.node.setPosition(x, y);
+            }
+        });
+        this.node.on('touchend', function (e) {
+            this.hold = false;
+        });
     },
 
     update(dt) {
@@ -122,7 +132,7 @@ cc.Class({
             this.node.parent.addChild(node);
             // 获取玩家飞机定位确定起始位置并执行动画
             let { position: { x, y } } = this.node;
-            node.setPosition(cc.v2(x, y + 16));
+            node.setPosition(cc.v2(x, y + 130));
             node.getComponent("bullet").fly();
         }
     },
