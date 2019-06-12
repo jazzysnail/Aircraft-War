@@ -90,6 +90,14 @@ cc.Class({
       }
       this.timer += dt;
     },
+    /**
+     * 当碰撞产生的时候调用
+     * @param  {Collider} other 产生碰撞的另一个碰撞组件
+     * @param  {Collider} self  产生碰撞的自身的碰撞组件
+     */
+    onCollisionEnter: function (other, self) {
+        this.bleed();
+    },
     // 消耗血量
     bleed() {
         this.lifeValue--;
@@ -100,6 +108,7 @@ cc.Class({
     runBlowUpAnim() {
         this.getComponent(cc.Animation).play('blowUp');
         this.isBlowUp = true;
+        this.active = false;
     },
     /**
      * 创建子弹对应的对象池
