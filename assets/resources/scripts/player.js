@@ -66,8 +66,10 @@ cc.Class({
     });
     // 检测拖拽行为
     this.hold = false;
-    this.node.on('touchstart', function (e) {
+    this.node.on('touchstart', function () {
       this.hold = true;
+      this.node.emit('hold');
+      vm.node.parent.isGameing = true;
     });
     this.node.on('touchmove', function (e) {
       if (this.hold) {
@@ -77,7 +79,7 @@ cc.Class({
         vm.node.setPosition(x, y);
       }
     });
-    this.node.on('touchend', function (e) {
+    this.node.on('touchend', function () {
       this.hold = false;
     });
 

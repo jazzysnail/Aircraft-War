@@ -46,9 +46,6 @@ cc.Class({
     this.timer = 0;
     this.enemyMap = {};
     this.probabilityLine = [];
-
-
-
     /**
      * 创建敌机对象池
      * 机种数量等于对象池数量
@@ -73,6 +70,10 @@ cc.Class({
     cc.director.getCollisionManager().enabled = true;
   },
 
+  start() {
+    cc.log(this.node.children)
+  },
+
   update(dt) {
     if (this.timer >= 1.5) {
       this.createEnemy();
@@ -94,7 +95,16 @@ cc.Class({
     cc.game.restart();
     cc.director.resume();
   },
-
+  /**
+   * 末日 清屏
+   * @return {[type]} [description]
+   */
+  doom() {
+    this.node.emit('doom');
+  },
+  /**
+   * 创建敌机
+   */
   createEnemy() {
     // 从对象池中获取敌机
     let random = Number.parseInt(Math.random()*10);

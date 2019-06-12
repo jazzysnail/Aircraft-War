@@ -1,0 +1,11 @@
+{
+  "name": "Aircraft-War",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jazzysnail/Aircraft-War.git",
+  "author": "jazzysnail <jazzysnail@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^4.0.1"
+  }
+}
