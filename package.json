@@ -6,6 +6,6 @@
   "author": "jazzysnail <jazzysnail@outlook.com>",
   "license": "MIT",
   "dependencies": {
-    "redux": "^4.0.1"
+    "redux": "/usr/local4.0.1"
   }
 }

@@ -204,7 +204,8 @@
     },
     "_enabled": true,
     "hp": 3,
-    "flyDuration": 18,
+    "score": 6000,
+    "flyDuration": 12,
     "type": 1
   },
   {

@@ -53,6 +53,15 @@ cc.Class({
     this.timer = 0;
     this.isBlowUp = false;
     this.bulletMap = {};
+    this.hold = false;
+    this.isGameing = false;
+    this.invincible = true;
+
+
+
+
+
+
     // 遍历子弹实例创建对象池及索引
     this.bulletPrefabs.forEach(bulletObj => {
       let { poolName, type, prefab } = bulletObj;
@@ -64,15 +73,17 @@ cc.Class({
         prefab: prefab,
       };
     });
-    // 检测拖拽行为
-    this.hold = false;
+
+
+
+
+
     this.node.on('touchstart', function () {
-      this.hold = true;
-      this.node.emit('hold');
-      vm.node.parent.isGameing = true;
+      vm.hold = true;
+      vm.node.emit('hold');
     });
     this.node.on('touchmove', function (e) {
-      if (this.hold) {
+      if (vm.hold) {
         let { x, y } = e.getLocation();
         x -= vm.node.parent.width/2;
         y -= (vm.node.parent.height/2);
@@ -80,8 +91,16 @@ cc.Class({
       }
     });
     this.node.on('touchend', function () {
-      this.hold = false;
+      vm.hold = false;
     });
+
+    this.node.parent.on('gameing', function() {
+      vm.isGameing = true;
+      // 开始前的三秒无敌状态
+      setTimeout(function() {
+        vm.invincible = false;
+      },3000);
+    })
 
     this.getComponent(cc.Animation).play('loop');
   },
@@ -100,7 +119,7 @@ cc.Class({
    * @param  {Collider} self  产生碰撞的自身的碰撞组件
    */
   onCollisionEnter: function () {
-    if (this.node.parent.isGameing) {
+    if (!this.invincible) {
       this.bleed();
     }
   },
@@ -114,6 +133,7 @@ cc.Class({
     this.getComponent(cc.Animation).play('blowUp');
     this.isBlowUp = true;
     this.active = false;
+    this.node.emit('blowUp');
   },
   /**
    * 创建子弹对应的对象池
@@ -136,7 +156,7 @@ cc.Class({
    * @return {undefined}
    */
   shoot() {
-    if (!this.isBlowUp && this.node.parent.isGameing) {
+    if (!this.isBlowUp && this.isGameing) {
       let { pool, prefab } = this.bulletMap[this.bulletType];
       let node = pool.size() > 0 ? pool.get() : cc.instantiate(prefab);
       // 挂载节点

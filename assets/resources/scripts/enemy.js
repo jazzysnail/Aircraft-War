@@ -11,9 +11,29 @@ cc.Class({
           return (this.hp !== 0)
       }
     },
-    flyDuration: 3,
+    score: {
+      default: 1000,
+      displayName: "击杀得分",
+    },
+    flyDuration: 10, // 待删除
+    v: {
+      default: 10,
+      displayName: "初速度",
+      tooltip: "起飞初速度（px/s）"
+    },
+    a: {
+      default: 10,
+      displayName: "加速度",
+      tooltip: "随游戏时长的加速度（px/s²）"
+    },
+    fluctuation: {
+      default: 5,
+      displayName: "波动半径",
+      tooltip: "飞行速度波动半径"
+    },
     type: {
-      default: 0
+      default: 0,
+      serializable: false
     },
     main: {
       default: null,
@@ -24,13 +44,12 @@ cc.Class({
   onLoad () {
     this.flyAction = this.setFlyAction();
     this.__hp = this.hp;
-    this.__parent = this.node.parent;
   },
   /**
    * 碰撞检测回调
    */
   onCollisionEnter() {
-    if (this.node.parent.isGameing) {
+    if (this.main.state.isGameing) {
       this.bleed();
     }
   },
@@ -40,18 +59,21 @@ cc.Class({
   bleed() {
     this.hp--;
     if(!this.health) {
-        this.blowUp();
+        this.blowUp(1);
     }
   },
   /**
    * 起飞
    */
   fly() {
-    this.node.runAction(this.flyAction);
-    // 监听父级末日事件 自爆
     let vm = this;
-    this.node.parent.on('doom', function() {
-      vm.blowUp();
+    this.node.runAction(this.flyAction);
+    /**
+     * 监听父级末日事件 自爆
+     * @param  {[type]} e.detail doom 方法调用来源 ['初始清屏', '道具清屏']
+     */
+    this.node.parent.on('doom', function(e) {
+      vm.blowUp(e.detail);
     });
   },
   /**
@@ -61,7 +83,7 @@ cc.Class({
     this.node.stopAction(this.flyAction);
   },
   /**
-   * 飞机的飞行姿态
+   * 飞行姿态
    * @return {cc.Action}
    */
   setFlyAction() {
@@ -71,19 +93,23 @@ cc.Class({
     return cc.sequence(fly, callback);
   },
   /**
-   * 当飞机被击毁或者飞出屏幕
+   * 当飞机被击毁或者飞离屏幕
    */
   onEnemyHitOrDisappeared() {
-    this.stop(); // 停止飞行动画
-    this.hp = this.__hp;
-    this.main.enemyMap[this.type].pool.put(this.node);
+    this.stop(); // 停止飞行
+    this.hp = this.__hp; // 回复血量
+    this.main.enemyMap[this.type].pool.put(this.node); // 回收
   },
   /**
    * 炸毁
+   * @param  {Number} source [0: 清屏炸毁 !0: 击毁或遭受末日]
    */
-  blowUp() {
+  blowUp(source) {
     let vm = this;
     let act = this.getComponent(cc.Animation);
+    // 清屏炸毁不触发 blowUp
+    if (source) this.node.emit('blowUp', {type: this.type, score: this.score});
+
     act.on('finished', this.onEnemyHitOrDisappeared, vm);
     act.play(this.name.replace(/^(.+)<.+$/, (m, $1) => `${$1}-blow-up`));
   },
