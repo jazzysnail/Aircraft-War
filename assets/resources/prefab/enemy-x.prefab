@@ -170,8 +170,9 @@
     "_enabled": true,
     "hp": 1,
     "score": 1000,
-    "flyDuration": 10,
-    "type": 0
+    "v": 70,
+    "a": 1,
+    "fluctuation": 10
   },
   {
     "__type__": "cc.PrefabInfo",

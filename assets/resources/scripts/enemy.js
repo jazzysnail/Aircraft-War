@@ -15,21 +15,21 @@ cc.Class({
       default: 1000,
       displayName: "击杀得分",
     },
-    flyDuration: 10, // 待删除
+    // flyDuration: 10, // 待删除
     v: {
-      default: 10,
+      default: 70,
       displayName: "初速度",
       tooltip: "起飞初速度（px/s）"
     },
     a: {
-      default: 10,
+      default: 1,
       displayName: "加速度",
       tooltip: "随游戏时长的加速度（px/s²）"
     },
     fluctuation: {
-      default: 5,
+      default: 10,
       displayName: "波动半径",
-      tooltip: "飞行速度波动半径"
+      tooltip: "飞行速度波动半径 (px/s)"
     },
     type: {
       default: 0,
@@ -42,8 +42,10 @@ cc.Class({
   },
 
   onLoad () {
-    this.flyAction = this.setFlyAction();
+    // this.flyAction = this.setFlyAction();
     this.__hp = this.hp;
+    this.__flyAction = null;
+    this.node.parent.on('doom', this.__handleDoom, this);
   },
   /**
    * 碰撞检测回调
@@ -63,32 +65,34 @@ cc.Class({
     }
   },
   /**
-   * 起飞
+   * 监听父级末日事件 自爆
+   * @param  {[type]} e.detail doom 方法调用来源 ['初始清屏', '道具清屏']
    */
-  fly() {
-    let vm = this;
-    this.node.runAction(this.flyAction);
-    /**
-     * 监听父级末日事件 自爆
-     * @param  {[type]} e.detail doom 方法调用来源 ['初始清屏', '道具清屏']
-     */
-    this.node.parent.on('doom', function(e) {
-      vm.blowUp(e.detail);
-    });
+  __handleDoom(e) {
+    this.blowUp(e.detail);
   },
-  /**
-   * 停止飞行
-   */
-  stop() {
-    this.node.stopAction(this.flyAction);
+
+  takeOff() {
+    this.__flyAction = this.setFlyAction();
+    this.node.runAction(this.__flyAction);
+  },
+
+  landing() {
+    this.node.stopAction(this.__flyAction);
   },
   /**
    * 飞行姿态
    * @return {cc.Action}
    */
   setFlyAction() {
-    let node = this.node;
-    let fly = cc.moveBy(this.flyDuration, cc.p(0, -(node.parent.height+node.height)));
+    let { node, v, a, fluctuation } = this;
+    let { node: { height }, state: { sts } } = this.main;
+    let m = height + node.height;
+    let duration = sts !== 0 ? Math.floor((Date.now() - sts)/1e3) : 0; // 游戏时长
+    this.v = duration * a + v;
+    // 加入速度波动生成起飞初始速度
+    v = Math.floor(Math.random() * (fluctuation * 2 + 0.1) + (this.v-fluctuation));
+    let fly = cc.moveBy(Math.floor(m/v), cc.p(0, -(height+node.height)));
     let callback = cc.callFunc(this.onEnemyHitOrDisappeared, this);
     return cc.sequence(fly, callback);
   },
@@ -96,7 +100,7 @@ cc.Class({
    * 当飞机被击毁或者飞离屏幕
    */
   onEnemyHitOrDisappeared() {
-    this.stop(); // 停止飞行
+    this.landing(); // 停止飞行
     this.hp = this.__hp; // 回复血量
     this.main.enemyMap[this.type].pool.put(this.node); // 回收
   },

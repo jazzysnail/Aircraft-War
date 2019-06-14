@@ -96,8 +96,9 @@ cc.Class({
   },
 
   update(dt) {
+    // 飞机刷新率 =
     if (this.state.timer >= 1.5) {
-      this.createEnemy();
+      this.__createEnemy();
       this.state.timer = 0;
       return;
     }
@@ -106,7 +107,7 @@ cc.Class({
 
   __start() {
     if (!this.state.isGameing) {
-      this.sts = Date.now();
+      this.state.sts = Date.now();
       this.doom(0);
       this.title.removeFromParent();
       this.state.isGameing = true;
@@ -151,7 +152,7 @@ cc.Class({
   /**
    * 创建敌机
    */
-  createEnemy() {
+  __createEnemy() {
     // 随机得到敌机类型
     let random = Math.random();
     let type = this.probabilityLine.find(item => (random < item[0]))[1];
