@@ -172,7 +172,7 @@
     "score": 1000,
     "v": 70,
     "a": 1,
-    "fluctuation": 10
+    "fluctuation": 15
   },
   {
     "__type__": "cc.PrefabInfo",

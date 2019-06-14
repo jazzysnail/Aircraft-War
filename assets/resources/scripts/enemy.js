@@ -15,7 +15,6 @@ cc.Class({
       default: 1000,
       displayName: "击杀得分",
     },
-    // flyDuration: 10, // 待删除
     v: {
       default: 70,
       displayName: "初速度",
@@ -27,7 +26,7 @@ cc.Class({
       tooltip: "随游戏时长的加速度（px/s²）"
     },
     fluctuation: {
-      default: 10,
+      default: 15,
       displayName: "波动半径",
       tooltip: "飞行速度波动半径 (px/s)"
     },
@@ -42,9 +41,9 @@ cc.Class({
   },
 
   onLoad () {
-    // this.flyAction = this.setFlyAction();
     this.__hp = this.hp;
     this.__flyAction = null;
+    this.updateTimeA = 0; // 加速度更新参照时刻
     this.node.parent.on('doom', this.__handleDoom, this);
   },
   /**
@@ -61,7 +60,7 @@ cc.Class({
   bleed() {
     this.hp--;
     if(!this.health) {
-        this.blowUp(1);
+      this.blowUp(1);
     }
   },
   /**
@@ -85,13 +84,17 @@ cc.Class({
    * @return {cc.Action}
    */
   setFlyAction() {
-    let { node, v, a, fluctuation } = this;
+    let { node, v, a, fluctuation, updateTimeA } = this;
     let { node: { height }, state: { sts } } = this.main;
     let m = height + node.height;
-    let duration = sts !== 0 ? Math.floor((Date.now() - sts)/1e3) : 0; // 游戏时长
-    this.v = duration * a + v;
+
+    let duration = (sts !== 0) ? Math.floor((Date.now() - sts)/1e3) : 0; // 游戏时长
+    this.v = (duration - updateTimeA) * a + v;
+    this.updateTimeA = duration;
+
     // 加入速度波动生成起飞初始速度
     v = Math.floor(Math.random() * (fluctuation * 2 + 0.1) + (this.v-fluctuation));
+
     let fly = cc.moveBy(Math.floor(m/v), cc.p(0, -(height+node.height)));
     let callback = cc.callFunc(this.onEnemyHitOrDisappeared, this);
     return cc.sequence(fly, callback);
