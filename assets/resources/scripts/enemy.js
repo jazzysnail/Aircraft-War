@@ -42,7 +42,11 @@ cc.Class({
     main: {
       default: null,
       serializable: false
-    }
+    },
+    downAudio: {
+      default: null,
+      url: cc.AudioClip
+    },
   },
 
   onLoad () {
@@ -103,7 +107,7 @@ cc.Class({
     // 加入速度波动生成起飞初始速度
     v = Math.floor(Math.random() * (fluctuation * 2 + 0.1) + (this.v-fluctuation));
 
-    cc.log(`时长:${duration}`, `速度:${v}`);
+    // cc.log(`时长:${duration}`, `速度:${v}`);
 
     let fly = cc.moveBy(Math.floor(m/v), cc.p(0, -(height+node.height)));
     let callback = cc.callFunc(this.onEnemyHitOrDisappeared, this);
@@ -125,8 +129,10 @@ cc.Class({
     let vm = this;
     let act = this.getComponent(cc.Animation);
     // 清屏炸毁不触发 blowUp
-    if (source) this.node.emit('blowUp', {type: this.type, score: this.score});
-
+    if (source) {
+      this.node.emit('blowUp', {type: this.type, score: this.score});
+      cc.audioEngine.playEffect(this.downAudio, false);
+    }
     act.on('finished', this.onEnemyHitOrDisappeared, vm);
     act.play(this.name.replace(/^(.+)<.+$/, (m, $1) => `${$1}-blow-up`));
   },

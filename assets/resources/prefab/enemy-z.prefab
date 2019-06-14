@@ -145,7 +145,11 @@
     "score": 10000,
     "v": 70,
     "a": 1,
-    "fluctuation": 15
+    "fluctuation": 15,
+    "maxSpeed": 300,
+    "downAudio": {
+      "__uuid__": "85ebdf85-ea4d-43f1-b720-1d2616495252"
+    }
   },
   {
     "__type__": "cc.PrefabInfo",

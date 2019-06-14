@@ -45,7 +45,11 @@ cc.Class({
       get: function() {
         return (this.lifeValue !== 0)
       }
-    }
+    },
+    bulletAudio: {
+      default: null,
+      url: cc.AudioClip
+    },
   },
 
   onLoad () {
@@ -97,9 +101,9 @@ cc.Class({
     this.node.parent.on('gameing', function() {
       vm.isGameing = true;
       // 开始前的三秒无敌状态
-      setTimeout(function() {
-        vm.invincible = false;
-      },3000);
+      // setTimeout(function() {
+      //   vm.invincible = false;
+      // },3000);
     })
 
     this.getComponent(cc.Animation).play('loop');
@@ -165,6 +169,7 @@ cc.Class({
       let { position: { x, y } } = this.node;
       node.setPosition(cc.v2(x, y + 130));
       node.getComponent("bullet").fly();
+      cc.audioEngine.playEffect(this.bulletAudio, false);
     }
   },
   /**
