@@ -6,7 +6,7 @@ cc.Class({
       default: 1,
       displayName: "生命值",
     },
-    health: {
+    survive: {
       get: function() {
           return (this.hp !== 0)
       }
@@ -29,6 +29,11 @@ cc.Class({
       default: 15,
       displayName: "波动半径",
       tooltip: "飞行速度波动半径 (px/s)"
+    },
+    maxSpeed: {
+      default: 300,
+      displayName: "最高速度",
+      tooltip: "最高飞行速度(基值，不包含波动值) (px/s)"
     },
     type: {
       default: 0,
@@ -59,7 +64,7 @@ cc.Class({
    */
   bleed() {
     this.hp--;
-    if(!this.health) {
+    if(!this.survive) {
       this.blowUp(1);
     }
   },
@@ -84,16 +89,21 @@ cc.Class({
    * @return {cc.Action}
    */
   setFlyAction() {
-    let { node, v, a, fluctuation, updateTimeA } = this;
+    let { node, v, a, fluctuation, updateTimeA, maxSpeed } = this;
     let { node: { height }, state: { sts } } = this.main;
     let m = height + node.height;
-
     let duration = (sts !== 0) ? Math.floor((Date.now() - sts)/1e3) : 0; // 游戏时长
-    this.v = (duration - updateTimeA) * a + v;
-    this.updateTimeA = duration;
+    // 速度到达最高值不再加速
+    if(this.v < maxSpeed) {
+      v = (duration - updateTimeA) * a + v;
+      this.v = v < maxSpeed ? v : maxSpeed;
+      this.updateTimeA = duration;
+    }
 
     // 加入速度波动生成起飞初始速度
     v = Math.floor(Math.random() * (fluctuation * 2 + 0.1) + (this.v-fluctuation));
+
+    cc.log(`时长:${duration}`, `速度:${v}`);
 
     let fly = cc.moveBy(Math.floor(m/v), cc.p(0, -(height+node.height)));
     let callback = cc.callFunc(this.onEnemyHitOrDisappeared, this);
