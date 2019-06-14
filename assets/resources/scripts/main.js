@@ -69,10 +69,9 @@ cc.Class({
       type: cc.Node
     },
     enemyPrefabs: [Enemy],
-    enemyDensity: {
-      default: 20,
-      displayName: "敌机密度",
-      tooltip: "敌机同时可在可视区域出现的数量"
+    enemyRefreshRate: {
+      default: 1.2,
+      displayName: "敌机刷新率"
     }
   },
 
@@ -96,8 +95,7 @@ cc.Class({
   },
 
   update(dt) {
-    // 飞机刷新率 =
-    if (this.state.timer >= 1.5) {
+    if (this.state.timer >= this.enemyRefreshRate) {
       this.__createEnemy();
       this.state.timer = 0;
       return;
