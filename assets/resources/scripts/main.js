@@ -77,7 +77,6 @@ cc.Class({
   },
 
   onLoad() {
-    let vm = this;
     this.player.zIndex = 2;
     /**
      * 创建敌机对象池，对象池数量等于机种数量
@@ -85,36 +84,15 @@ cc.Class({
      */
     this.enemyPrefabs.forEach((enemyObj, index) => {
       let { poolName, prefab, probability } = enemyObj;
-      // 创建子弹对象池
       this.createObjPool(poolName, 20, index, prefab);
-      // 创建子弹类型索引
       this.enemyMap.push({ pool: this[poolName], prefab });
       this.probabilityLine.push([probability, index]);
     });
-    /**
-     * 1. 排序
-     * 2. 斐波那锲加得到概率线
-     */
-    this.probabilityLine.sort((a,b) => (a[0] - b[0])).forEach((item, index) => {
-      let pre = this.probabilityLine[index-1] || [0];
-      item[0] = pre[0] + item[0];
-    });
-    // 开启碰撞检测
+
+    this.probabilityLine = this.getProbabilityLine(this.probabilityLine, '0');
     cc.director.getCollisionManager().enabled = true;
-    // 监听飞机按压事件断定开始并初始化
-    this.player.on('hold', function() {
-      if (!vm.state.isGameing) {
-        vm.sts = Date.now();
-        vm.doom(0);
-        vm.title.removeFromParent();
-        vm.state.isGameing = true;
-        vm.node.emit('gameing');
-      }
-    });
-    // 玩家飞机炸毁后将该节点移除（不销毁）
-    this.player.on('blowUp', function() {
-      vm.player.removeFromParent();
-    });
+    this.player.on('hold', this.__start, this);
+    this.player.on('blowUp', this.__removePlayerNode, this);
   },
 
   update(dt) {
@@ -124,6 +102,20 @@ cc.Class({
       return;
     }
     this.state.timer += dt;
+  },
+
+  __start() {
+    if (!this.state.isGameing) {
+      this.sts = Date.now();
+      this.doom(0);
+      this.title.removeFromParent();
+      this.state.isGameing = true;
+      this.node.emit('gameing');
+    }
+  },
+
+  __removePlayerNode() {
+    this.player.removeFromParent();
   },
 
   pause() {
@@ -176,7 +168,26 @@ cc.Class({
     let y = this.node.height/2;
     node.setPosition(randomX-this.node.width/2, y);
     node.opacity = 255;
-    node.getComponent("enemy").fly();
+    node.getComponent("enemy").takeOff();
+  },
+  /**
+   * 获取实例按照概率线的排序分布
+   * 例： [0.5, 0.2, 0.3] => [0.2, 0.5, 1]
+   * @param  {Array}  arr    实例数组
+   * @param  {String} target 概率属性路径
+   * @return {Array}         实例概率线分布
+   */
+  getProbabilityLine(arr, target) {
+    // 1. 浅拷贝
+    let probabilityLine = [].concat(arr);
+    // 2. 排序
+    probabilityLine.sort((a,b) => (a[target] - b[target]));
+    // 3. F(n)=F(n-1)+F(n-2)（斐波那锲） 递推求概率线
+    probabilityLine.forEach((item, i) => {
+      let pre = probabilityLine[i-1] || [0];
+      item[target] = pre[target] + item[target];
+    });
+    return probabilityLine;
   },
 
   /**
