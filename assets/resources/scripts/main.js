@@ -1,6 +1,3 @@
- /**
-  * 敌机类
-  */
 let Enemy = cc.Class({
   name: "Enemy",
   properties: {
